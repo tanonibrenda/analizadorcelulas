@@ -1,0 +1,91 @@
+```html
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitoScan AI - Analizador de Células Completa vs Incompleta</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bio: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#134e4a',
+                            950: '#042f2e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0d9488; }
+        
+        /* Laser scanner effect animation */
+        @keyframes scanline {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { top: 98%; opacity: 0.8; }
+        }
+        .animate-scan {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #14b8a6, #38bdf8, transparent);
+            box-shadow: 0 0 15px #14b8a6;
+            animation: scanline 2.2s ease-in-out infinite alternate;
+        }
+
+        /* Pulse glow */
+        .glow-bio {
+            box-shadow: 0 0 25px -5px rgba(20, 184, 166, 0.3);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased selection:bg-bio-500 selection:text-white">
+
+    <!-- Top Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-bio-600 to-cyan-500 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-bio-600/30">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-white via-slate-200 to-bio-500 bg-clip-text text-transparent">
+                        CitoScan AI
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Evaluación de la integridad celular en imágenes y esquemas</p>
+                </div>
+            </div>
+
+            <!-- Controls / API Key Status -->
+            <div class="flex items-center space-x-3">
+                <button id="btnOpenHistory" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex items-center gap-2 transition">
+                    <i class="fa-solid fa-clock-rotate-left text-bio-500"></i>
+                    <span>Historial</span>
+                    <span id="historyBadge" class="bg-bio-600 text-slate-950 text-[10px] font-bold px-1.5 py-0.2 rounded-full hidden">0</span>
+                </button>
